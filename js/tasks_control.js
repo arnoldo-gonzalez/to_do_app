@@ -21,21 +21,23 @@ export const normalizeTime = (time) => {
     return hours + ":" + minutes + hoursHalf
 }
 
-export async function enableInterval() {
+export async function enableNotifications() {
     const permission = await Notification.requestPermission()
     modal.classList.remove("visible")
-
     if (permission === "granted") {
+        const worker = new Worker("/js/worker_notify.js")
         setInterval(() => {
 	    const currentDate = new Date()
 	    const currentTime = normalizeTime(`${currentDate.getHours()}:${currentDate.getMinutes()}`)
 	    if (times.includes(currentTime)) {
 		const tasksToDo = Object.entries(tasks).filter( ([key, val]) => val !== null).filter( ([key, {time}]) => time === currentTime)
 		tasksToDo.forEach(([key, {name}], i) => {
+		    /*
 		    setTimeout(() => {
                         new Notification(`It's time of ${name}`, { body: `It's ${currentTime}, and is time of do the task named "${name}". I wish you luck doing that`})
   		        document.getElementById(key).classList.add("time-to-do")
-		    }, i * 1000)
+		    }, i * 500)*/
+    	            worker.postMessage({name, currentTime, i})
 		    tasks[key] = null
 		})
                 localStorage.setItem("tasks", JSON.stringify(tasks))

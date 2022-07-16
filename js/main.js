@@ -1,4 +1,4 @@
-import addTask, {modal, taskPlace, normalizeTime, removeTask, enableInterval} from "./tasks_control.js"
+import addTask, {modal, taskPlace, normalizeTime, removeTask, enableNotifications} from "./tasks_control.js"
 
 const html = document.getElementsByTagName("html")[0]
 const btnTheme = document.getElementById("btn-theme")
@@ -20,7 +20,7 @@ window.addEventListener("load", () => {
     }
 
     if (Notification.permission !== "granted") modal.classList.add("visible")
-    else enableInterval()
+    else enableNotifications()
 })
 
 btnTheme.addEventListener("click", e => {
@@ -46,5 +46,5 @@ taskPlace.addEventListener("click", e => {
 btnsModal.forEach(e => e.addEventListener("click", e => {
     const action = e.currentTarget.dataset.action
     if (action === "close") modal.classList.remove("visible")
-    else enableInterval()
+    else enableNotifications()
 }))
