@@ -38,7 +38,7 @@ html {
 body {
     display:grid;
     grid-template-columns: 1fr;
-    grid-template-rows: calc(10vh + 1rem) minmax(auto, 1fr) 9vh;
+    grid-template-rows: auto minmax(auto, 1fr) 9vh;
     grid-template-areas: 
     "header"
     "main"
@@ -56,9 +56,12 @@ body {
 
 .header {
     grid-area: header;
+    z-index: 100;
     position: sticky;
     top: -1rem;
     padding-top: 1rem;
+    min-height: 6rem;
+    height: calc(10vh + 1rem);
     background-color: var(--main-color);
 }
 
@@ -67,7 +70,8 @@ body {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    min-height: 10vh;
+    min-height: 5rem;
+    height: 10vh;
     padding: 5px;
 }
 
@@ -374,6 +378,7 @@ body {
 .taskPlace__p {
     position: relative;
     padding: 15px 10px;
+    min-width: 7rem;
     border-radius: 15px;
     border: 2px solid var(--main-color);
 }
