@@ -15,6 +15,8 @@ export const normalizeTime = (time) => {
 	hoursHalf = "PM"
     }
 
+    if (hours.length < 2) hours = "0" + hours
+
     if (parseInt(hours) === 12 && parseInt(minutes) > 0) hoursHalf = "PM"
     if (minutes.length < 2) minutes = "0" + minutes
 
@@ -28,6 +30,7 @@ export async function enableNotifications() {
         setInterval(() => {
 	    const currentDate = new Date()
 	    const currentTime = normalizeTime(`${currentDate.getHours()}:${currentDate.getMinutes()}`)
+	    console.log({currentTime, times})
 	    if (times.includes(currentTime)) {
 		const tasksToDo = Object.entries(tasks).filter( ([key, val]) => val !== null).filter( ([key, {time}]) => time === currentTime)
 		tasksToDo.forEach(([key, {name}], i) => {
